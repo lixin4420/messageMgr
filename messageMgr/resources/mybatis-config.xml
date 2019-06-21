@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- 通过这个配置文件完成mybatis与数据库的连接 -->
+<configuration>
+	<!-- 引入 database.properties 文件-->
+	<properties resource="database.properties"/>
+	<!-- 配置mybatis的log实现为LOG4J -->
+	<settings>
+		<setting name="logImpl" value="LOG4J" />
+		<!---自动映射级别
+					NONE不自动映射
+					默认：PARTIAL部分映射，自动匹配所有属性，但是：内部嵌套类例外，association、collection
+					FULL全部自动映射,association、collection-->
+		<!--<setting name="autoMappingBehavior" value="NONE"/>-->
+		<!--<setting name="autoMappingBehavior" value="PARTIAL"/>-->
+		<!--<setting name="autoMappingBehavior" value="FULL"/>-->
+	</settings>
+	<!---自动映射级别NONE不自动映射-->
+	<!--<setting name="autoMappingBehavior" value="NONE"/>-->
+	<!--指定类型别名，简化Mapper配置文件中实体类的代码长度-->
+	<typeAliases>
+		<!--设置单个别名-->
+		<!--<typeAlias type="com.smbms.pojo.User" alias="User"/>-->
+		<!--当有多个实体类时，简化配置，该包下的所有类的别名都会设置为类名-->
+		<package name="com.msg.entity"/>
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<!--配置事务管理，采用JDBC的事务管理  -->
+			<transactionManager type="JDBC"></transactionManager>
+			<!-- POOLED:mybatis自带的数据源，JNDI:基于tomcat的数据源 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}"/>
+				<property name="url" value="${url}"/>
+				<property name="username" value="${user}"/>
+				<property name="password" value="${password}"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- 将mapper文件加入到配置文件中 -->
+	<mappers>
+		<!--方式1：使用类资源路径获取资源-->
+		<mapper resource="com/msg/dao/UserMapper.xml"/>
+		<mapper resource="com/msg/dao/MessageMapper.xml/>
+		<!--方式2：使用URL获取资源，基于物理磁盘位置查找-->
+		<!--<mapper url="file:///D:\idea-projects\day01\src\com\smbms\dao\UserMapper.xml"></mapper>-->
+	</mappers>
+
+</configuration>

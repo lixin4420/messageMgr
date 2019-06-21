@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.msg.dao.MessageMapper">
+    <!--resultType对应接口方法前面类型 parameterType对应接口后面参数类型-->
+    <select id="queryMsgBySendto" resultType="Message" parameterType="String">
+        SELECT
+          msgid,
+          username,
+          title,
+          msg_content,
+          state,
+          sendto,
+          msg_create_date
+        FROM
+          message
+        WHERE sendto = #{sendto}
+        ORDER BY msg_create_date DESC
+    </select>
+
+    <insert id="addMsg" parameterType="int">
+        INSERT INTO message (username, title, msg_content, state, sendto, msg_create_date)
+        VALUES(#{username}, #{title}, #{msgContent}, #{state}, #{sendto}, #{msgCreateDate})
+    </insert>
+
+    <select id="queryMsgById" resultMap="Message" parameterType="int">
+        SELECT msgid, username, title, msg_content, state, sendto, msg_create_date
+        FROM message
+        WHERE msgid = #{msgid}
+    </select>
+    <resultMap id="Message" type="Message">
+        <result property="msgContent" column="msg_content"/>
+
+
+    </resultMap>
+
+    <update id="updateMsgById" parameterType="int">
+      UPDATE message SET state = 1 WHERE msgid = #{msgid}
+    </update>
+
+    <delete id="deleteMsg" parameterType="int">
+        DELETE FROM message WHERE msgid = #{msgid}
+    </delete>
+</mapper>
