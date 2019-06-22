@@ -11,7 +11,7 @@ import com.msg.dao.BaseDao;
 import com.msg.dao.MessageDao;
 import com.msg.entity.Message;
 
-public class MessageDaoImpl extends BaseDao implements MessageDao {
+public class MessageDaoImp		l extends BaseDao implements MessageDao {
 
 	public MessageDaoImpl(Connection connection) {
 		super(connection);
